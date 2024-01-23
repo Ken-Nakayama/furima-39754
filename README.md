@@ -2,39 +2,38 @@
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| nickname           | text       | null: false                    |
+| nickname           | string     | null: false                    |
 | email              | string     | null: false, unique: true      |
 | password           | string     | null: false                    |
-| last_name          | text       | null: false                    |
-| first_name         | text       | null: false                    |
-| last_name_kana     | text       | null: false                    |
-| first_name_kana    | text       | null: false                    |
-| birth_date         | text       | null: false                    |
+| last_name          | string     | null: false                    |
+| first_name         | string     | null: false                    |
+| last_name_kana     | string     | null: false                    |
+| first_name_kana    | string     | null: false                    |
+| birth_date         | string     | null: false                    |
 
 ### Association
-- has_many :items, dependent: :destroy
-- has_many :orders, dependent: :destroy
+- has_many :items
+- has_many :orders
 
 
 ## itemsテーブル
 
-| Column                   | Type       | Options                        |
-| ------------------------ | ---------- | ------------------------------ |
-| user                     | references | null: false, foreign_key: true |
-| image                    | references | null: false, foreign_key: true |
-| item_name                | text       | null: false                    |
-| item_text                | text       | null: false                    |
-| item_category            | text       | null: false                    |
-| item_sales_status        | text       | null: false                    |
-| item_shipping_fee_status | text       | null: false                    |
-| item_prefecture          | text       | null: false                    |
-| item_scheduled_delivery  | text       | null: false                    |
-| item_price               | text       | null: false                    |
+| Column              | Type       | Options                        |
+| ------------------- | ---------- | ------------------------------ |
+| user                | references | null: false, foreign_key: true |
+| name                | text       | null: false                    |
+| text                | text       | null: false                    |
+| category            | integer    | null: false                    |
+| sales_status        | integer    | null: false                    |
+| shipping_fee_status | integer    | null: false                    |
+| prefecture          | integer    | null: false                    |
+| scheduled_delivery  | integer    | null: false                    |
+| price               | integer    | null: false                    |
 
 ### Association
 - belongs_to :user
 - has_one_attached :image
-- has_one :order, dependant: :destroy
+- has_one :order
 
 
 ## ordersテーブル
@@ -47,7 +46,7 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :shipping, dependant: :destroy
+- has_one :shipping
 
 
 ## shippingsテーブル
@@ -55,12 +54,12 @@
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | order              | references | null: false, foreign_key: true |
-| postal_code        | text       | null: false                    |
-| prececture         | text       | null: false                    |
-| city               | text       | null: false                    |
-| addresses          | text       | null: false                    |
-| building           | text       |                                |
-| phone_number       | text       | null: false                    |
+| postal_code        | string     | null: false                    |
+| prefecture         | integer    | null: false                    |
+| city               | string     | null: false                    |
+| address            | string     | null: false                    |
+| building           | string     |                                |
+| phone_number       | string     | null: false                    |
 
 ### Association
 - belongs_to :order
