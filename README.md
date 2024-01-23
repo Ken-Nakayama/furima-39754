@@ -22,7 +22,7 @@
 | ---------------------- | ---------- | ------------------------------ |
 | user                   | references | null: false, foreign_key: true |
 | name                   | string     | null: false                    |
-| text                   | text       | null: false                    |
+| description            | text       | null: false                    |
 | category_id            | integer    | null: false                    |
 | sales_status_id        | integer    | null: false                    |
 | shipping_fee_status_id | integer    | null: false                    |
