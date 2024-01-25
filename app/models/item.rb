@@ -7,14 +7,7 @@ class Item < ApplicationRecord
     validates :shipping_fee_status_id
     validates :prefecture_id
     validates :scheduled_delivery_id
-    validates :price
-
-    #validates :nickname
-    #validates :last_name, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: "is invalid. Input full-width characters."}
-    #validates :first_name, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: "is invalid. Input full-width characters."}
-    #validates :last_name_kana, format: {with: /\A[ァ-ヶー]+\z/, message: "is invalid. Input full-width katakana characters."}
-    #validates :first_name_kana, format: {with: /\A[ァ-ヶー]+\z/, message: "is invalid. Input full-width katakana characters."}
-    #validates :birth_date
+    validates :price, format: { with: /\A[3-9]\d{2,6}\z/, message: 'is invalid. Input a number between 300 and 9,999,999' }
   end
 
   validates :category_id, numericality: { other_than: 1 , message: "can't be blank"}
