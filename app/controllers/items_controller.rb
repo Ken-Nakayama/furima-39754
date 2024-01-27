@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!
 
   def index
+    @item = Item.all
   end
 
   def new
@@ -13,23 +15,20 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
-
-    if @item.save
-      redirect_to root_path
+    #@item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
+    if params[:item][:image].present?
+      if @item.save
+        redirect_to root_path
+      else
+        # エラー時には、再度 new アクションを呼び出す前に入力済みの項目を保持
+        render :new, status: :unprocessable_entity
+      end
     else
       # エラー時には、再度 new アクションを呼び出す前に入力済みの項目を保持
-      @item.name = params[:item][:name]
-      @item.description = params[:item][:description]
-      @item.category_id = params[:item][:category_id]
-      @item.sales_status_id = params[:item][:sales_status_id]
-      @item.shipping_fee_status_id = params[:item][:shipping_fee_status_id]
-      @item.prefecture_id = params[:item][:prefecture_id]
-      @item.scheduled_delivery_id = params[:item][:scheduled_delivery_id]
-      @item.price = params[:item][:price]
-      render :new
+      @item.errors.add(:image, "を選択してください")
+      render :new, status: :unprocessable_entity
     end
-
   end
 
   private
