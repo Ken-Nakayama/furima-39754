@@ -3,6 +3,37 @@
     <%= link_to image_tag('furima-logo-color.png' , size: '185x50'), "/" %>
 
   </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var priceInput = document.getElementById('item-price');
+    var addTaxPriceElement = document.getElementById('add-tax-price');
+    var profitElement = document.getElementById('profit');
+
+    priceInput.addEventListener('input', function() {
+      // 入力された価格を取得
+      var price = parseFloat(priceInput.value);
+
+      // 入力が数値でない場合や範囲外の場合は処理しない
+      if (isNaN(price) || price < 300 || price > 9999999) {
+        addTaxPriceElement.textContent = '0';
+        profitElement.textContent = '0';
+        return;
+      }
+
+      // 販売手数料の計算（10%）
+      var addTaxPrice = Math.floor(price * 0.1);
+
+      // 販売利益の計算
+      var profit = price - addTaxPrice;
+
+      // 結果を表示
+      addTaxPriceElement.textContent = addTaxPrice.toLocaleString(); // 3桁ごとにカンマを表示
+      profitElement.textContent = profit.toLocaleString(); // 3桁ごとにカンマを表示
+    });
+  });
+</script>
+
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <%= form_with model: @item, local: true do |f| %>
@@ -21,7 +52,7 @@
         <p>
           クリックしてファイルをアップロード
         </p>
-        <%= f.file_field :hoge, id:"item-image" %>
+        <%= f.file_field :image, id:"item-image" %>
       </div>
     </div>
     <%# /商品画像 %>
@@ -31,13 +62,13 @@
         商品名
         <span class="indispensable">必須</span>
       </div>
-      <%= f.text_area :hoge, class:"items-text", id:"item-name", placeholder:"商品名（必須 40文字まで)", maxlength:"40" %>
+      <%= f.text_area :name, class:"items-text", id:"item-name", placeholder:"商品名（必須 40文字まで)", maxlength:"40" %>
       <div class="items-explain">
         <div class="weight-bold-text">
           商品の説明
           <span class="indispensable">必須</span>
         </div>
-        <%= f.text_area :hoge, class:"items-text", id:"item-info", placeholder:"商品の説明（必須 1,000文字まで）（色、素材、重さ、定価、注意点など）例）2010年頃に1万円で購入したジャケットです。ライトグレーで傷はありません。あわせやすいのでおすすめです。" ,rows:"7" ,maxlength:"1000" %>
+        <%= f.text_area :description, class:"items-text", id:"item-info", placeholder:"商品の説明（必須 1,000文字まで）（色、素材、重さ、定価、注意点など）例）2010年頃に1万円で購入したジャケットです。ライトグレーで傷はありません。あわせやすいのでおすすめです。" ,rows:"7" ,maxlength:"1000" %>
       </div>
     </div>
     <%# /商品名と商品説明 %>
@@ -99,7 +130,7 @@
             <span class="indispensable">必須</span>
           </div>
           <span class="sell-yen">¥</span>
-          <%= f.text_field :hoge, class:"price-input", id:"item-price", placeholder:"例）300" %>
+          <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
         </div>
         <div class="price-content">
           <span>販売手数料 (10%)</span>
