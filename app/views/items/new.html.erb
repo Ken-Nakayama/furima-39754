@@ -1,43 +1,10 @@
 <div class="items-sell-contents">
   <header class="items-sell-header">
     <%= link_to image_tag('furima-logo-color.png' , size: '185x50'), "/" %>
-
   </header>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var priceInput = document.getElementById('item-price');
-    var addTaxPriceElement = document.getElementById('add-tax-price');
-    var profitElement = document.getElementById('profit');
-
-    priceInput.addEventListener('input', function() {
-      // 入力された価格を取得
-      var price = parseFloat(priceInput.value);
-
-      // 入力が数値でない場合や範囲外の場合は処理しない
-      if (isNaN(price) || price < 300 || price > 9999999) {
-        addTaxPriceElement.textContent = '0';
-        profitElement.textContent = '0';
-        return;
-      }
-
-      // 販売手数料の計算（10%）
-      var addTaxPrice = Math.floor(price * 0.1);
-
-      // 販売利益の計算
-      var profit = price - addTaxPrice;
-
-      // 結果を表示
-      addTaxPriceElement.textContent = addTaxPrice.toLocaleString(); // 3桁ごとにカンマを表示
-      profitElement.textContent = profit.toLocaleString(); // 3桁ごとにカンマを表示
-    });
-  });
-</script>
-
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <%= form_with model: @item, local: true do |f| %>
-
     <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
       <%= render 'shared/error_messages', model: @item %>
     <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
@@ -86,7 +53,7 @@
           商品の状態
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:sales_status_id, Sales_Status.all, :id, :name, {}, { class: "select-box", id: "item-sales_status" }) %>
+        <%= f.collection_select(:sales_status_id, SalesStatus.all, :id, :name, {}, { class: "select-box", id: "item-sales_status" }) %>
       </div>
     </div>
     <%# /商品の詳細 %>
@@ -102,7 +69,7 @@
           配送料の負担
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:shipping_fee_status_id, Shipping_Fee_Status.all, :id, :name, {}, { class: "select-box", id: "item-shipping_fee_status" }) %>
+        <%= f.collection_select(:shipping_fee_status_id, ShippingFeeStatus.all, :id, :name, {}, { class: "select-box", id: "item-shipping_fee_status" }) %>
         <div class="weight-bold-text">
           発送元の地域
           <span class="indispensable">必須</span>
@@ -112,12 +79,42 @@
           発送までの日数
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:scheduled_delivery_id, Scheduled_Delivery.all, :id, :name, {}, { class: "select-box", id: "item-scheduled_delivery" }) %>
+        <%= f.collection_select(:scheduled_delivery_id, ScheduledDelivery.all, :id, :name, {}, { class: "select-box", id: "item-scheduled_delivery" }) %>
       </div>
     </div>
     <%# /配送について %>
 
     <%# 販売価格 %>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var priceInput = document.getElementById('item-price');
+    var addTaxPriceElement = document.getElementById('add-tax-price');
+    var profitElement = document.getElementById('profit');
+
+    priceInput.addEventListener('input', function() {
+      // 入力された価格を取得
+      var price = parseFloat(priceInput.value);
+
+      // 入力が数値でない場合や範囲外の場合は処理しない
+      if (isNaN(price) || price < 300 || price > 9999999) {
+        addTaxPriceElement.textContent = '0';
+        profitElement.textContent = '0';
+        return;
+      }
+
+      // 販売手数料の計算（10%）
+      var addTaxPrice = Math.floor(price * 0.1);
+
+      // 販売利益の計算
+      var profit = price - addTaxPrice;
+
+      // 結果を表示
+      addTaxPriceElement.textContent = addTaxPrice.toLocaleString(); // 3桁ごとにカンマを表示
+      profitElement.textContent = profit.toLocaleString(); // 3桁ごとにカンマを表示
+    });
+  });
+</script>
+
     <div class="sell-price">
       <div class="weight-bold-text question-text">
         <span>販売価格<br>(¥300〜9,999,999)</span>
@@ -169,7 +166,7 @@
     <%# /注意書き %>
     <%# 下部ボタン %>
     <div class="sell-btn-contents">
-      <%= f.submit "出品する" ,class:"sell-btn" %>
+      <%=f.submit "出品する" ,class:"sell-btn" %>
       <%=link_to 'もどる', root_path, class:"back-btn" %>
     </div>
     <%# /下部ボタン %>
