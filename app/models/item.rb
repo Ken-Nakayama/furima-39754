@@ -7,7 +7,13 @@ class Item < ApplicationRecord
     validates :shipping_fee_status_id
     validates :prefecture_id
     validates :scheduled_delivery_id
-    validates :price, format: { with: /\A[3-9]\d{2,6}\z/, message: 'is invalid. Input a number between 300 and 9,999,999' }
+    validates :price, numericality: {
+      greater_than_or_equal_to: 300,
+      less_than_or_equal_to: 9_999_999,
+      message: 'is invalid. Input a number between 300 and 9,999,999'
+    }
+
+    validates :image
   end
 
   validates :category_id, numericality: { other_than: 1 , message: "can't be blank"}

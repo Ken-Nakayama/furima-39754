@@ -9,5 +9,6 @@ FactoryBot.define do
     prefecture_id          {2}
     scheduled_delivery_id  {2}
     price                  {500}
+    image                  { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'image.jpg'), 'image/jpeg') }
   end
 end
