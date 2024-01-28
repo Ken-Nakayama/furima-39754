@@ -129,6 +129,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price is invalid. Input a number between 300 and 9,999,999")
       end
 
+      it 'priceが小数では登録できない' do
+        @item.price = 500.5
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid. Input a number between 300 and 9,999,999")
+      end
+
     end
   end
 end
