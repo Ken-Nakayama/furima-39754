@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
 
 
   private
-
+  #ブランチ作成忘れ後のコミット用
   def can_edit_item?(item)
     current_user && current_user.id == item.user_id
   end
