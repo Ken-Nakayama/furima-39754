@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   end
 
   def can_edit_item?(item)
-    current_user && current_user.id == item.user_id
+    current_user.id == item.user_id
   end
 
   def item_params
