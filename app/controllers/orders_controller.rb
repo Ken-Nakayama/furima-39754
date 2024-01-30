@@ -1,12 +1,14 @@
 class OrdersController < ApplicationController
-  before_action :set_item, only: [:index]
-
 
   def index
+    @item = Item.find(params[:item_id])
+    @order_shipping = OrderShipping.new(order_params)
   end
 
   def create
+    @item = Item.find(params[:item_id])
     @order_shipping = OrderShipping.new(order_params)
+    @order_shipping.item_id = @item.id
     if @order_shipping.valid?
       @order_shipping.save
       redirect_to root_path
@@ -18,11 +20,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_shipping).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id)
-  end
-
-  def set_item
-    @item = Item.find(params[:item_id])
+    params.fetch(:order_shipping, {}).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id)
   end
 
 end
