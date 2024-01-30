@@ -3,11 +3,11 @@ class OrderShipping
   attr_accessor :postal_code, :prefecture_id, :city, :address, :building, :phone_number
 
   with_options presence: true do
-    validates :postal_code
+    validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: "should be in the format xxx-xxxx" }
     validates :prefecture_id
     validates :city
     validates :address
-    validates :phone_number
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "should be 10 to 11 digits" }
   end
 
   validates :building
