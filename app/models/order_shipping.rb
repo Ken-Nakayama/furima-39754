@@ -21,7 +21,7 @@ class OrderShipping
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
     Shipping.create(
-      order_id: order&.id,
+      order_id: order.id,
       postal_code: postal_code,
       prefecture_id: prefecture_id,
       city: city,
