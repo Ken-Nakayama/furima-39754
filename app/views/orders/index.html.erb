@@ -26,14 +26,15 @@
         支払金額
       </h1>
       <p class='item-payment-price'>
-        ¥<%= "販売価格" %>
+        ¥<%= @item.price %>
       </p>
     </div>
+
+    <%= include_gon %>
+
     <%# /支払額の表示 %>
 
     <%= form_with(model: @order_shipping, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap', local: true) do |f| %>
-
-    <%# (@item) %>
 
      <%= render 'shared/error_messages', model: @order_shipping %>
 

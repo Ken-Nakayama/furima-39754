@@ -1,7 +1,7 @@
 class OrderShipping
   include ActiveModel::Model
   #include ActiveHash::Associations::ActiveRecordExtensions
-  attr_accessor :user_id, :item_id, :order_id, :postal_code, :prefecture_id, :city, :address, :building, :phone_number
+  attr_accessor :token, :user_id, :item_id, :order_id, :postal_code, :prefecture_id, :city, :address, :building, :phone_number
 
   with_options presence: true do
     validates :user_id
@@ -12,6 +12,7 @@ class OrderShipping
     validates :city
     validates :address
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "should be 10 to 11 digits" }
+    validates :token
   end
 
   validates :prefecture_id, numericality: { other_than: 1 , message: "can't be blank"}
