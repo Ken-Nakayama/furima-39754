@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
   end
 
   def redirect_if_ordered
-    if @item.ordered?
+    if @item.ordered? || current_user == @item.user
       redirect_to root_path
     end
   end
