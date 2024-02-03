@@ -13,12 +13,10 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    if @item.save
+    if params[:item][:image].present? && @item.save
       redirect_to root_path
     else
-      if params[:item][:image].nil?
-        @item.errors.add(:image, "を選択してください")
-      end
+      @item.errors.add(:image, "を選択してください")
       render :new, status: :unprocessable_entity
     end
   end
