@@ -13,6 +13,10 @@ RSpec.describe OrderShipping, type: :model do
       it '全てのカラムが存在すれば登録できる' do
         expect(@order_shipping).to be_valid
       end
+      it '建物名が空でも登録できる' do
+        @order_shipping.building = ''
+        expect(@order_shipping).to be_valid
+      end
     end
 
     context '商品が購入できないとき' do
